@@ -1085,12 +1085,60 @@ footer {
   .page-hero h1 { font-size: 1.6rem; }
   .section-title { font-size: 1.5rem; }
   .stats-row { grid-template-columns: 1fr 1fr; }
+  .stats-row .stat-box:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .stat-val { font-size: 1.4rem; }
   .carrier-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { grid-template-columns: 1fr; }
   .areas-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .topbar { display: none; }
+  .svc-img { height: 140px; }
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+  margin-right: 8px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #1a1a2e;
+  transition: all .3s;
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 12px 0;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a, .mobile-menu button {
+  padding: 14px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1a1a2e;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+.mobile-menu a:hover, .mobile-menu button:hover { color: #c8102e; background: #fafafa; }
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
 }
 </style>
 </head>
@@ -1104,7 +1152,10 @@ var navMap = {
   'insurance': 'ni-insurance','areas': 'ni-areas','about': 'ni-about',
   'referrals': 'ni-referrals','contact': ''
 };
-function showPage(pageId) {
+function showPage(pageId, pushState) {
+  if (pushState !== false) {
+    history.pushState({page: pageId}, '', '#' + pageId);
+  }
   var pages = document.querySelectorAll('.page');
   for (var i = 0; i < pages.length; i++) pages[i].style.display = 'none';
   var target = document.getElementById('page-' + pageId);
@@ -1132,33 +1183,7 @@ function showPage(pageId) {
 <nav class="nav">
   <div class="nav-inner">
     <a class="logo" onclick="showPage('home')">
-      <svg height="52" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:auto;">
-        <defs>
-          <linearGradient id="nS" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#6a7480"/><stop offset="30%" style="stop-color:#d0d8e0"/><stop offset="60%" style="stop-color:#e8edf2"/><stop offset="100%" style="stop-color:#8a9aaa"/></linearGradient>
-          <linearGradient id="nH" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#e8edf2"/><stop offset="40%" style="stop-color:#c0cad4"/><stop offset="100%" style="stop-color:#7a8a9a"/></linearGradient>
-        </defs>
-        <rect width="680" height="200" fill="#1a2540"/>
-        <g transform="translate(85,53) rotate(-38)">
-          <ellipse cx="0" cy="-32" rx="10" ry="4.5" fill="url(#nH)" stroke="#4a5868" stroke-width="0.8"/>
-          <ellipse cx="0" cy="-33" rx="8" ry="3" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.7"/>
-          <polygon points="-3.5,-29 3.5,-29 2.5,4 -2.5,4" fill="url(#nS)" stroke="#4a5868" stroke-width="0.5"/>
-          <line x1="1" y1="-28" x2="0.8" y2="3" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-          <polygon points="-2.5,4 2.5,4 0,12" fill="#9aaabb" stroke="#4a5868" stroke-width="0.5"/>
-        </g>
-        <polygon points="60,72 110,34 160,72" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
-        <rect x="78" y="52" width="10" height="16" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <polygon points="140,72 200,20 260,72" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round"/>
-        <rect x="190" y="48" width="20" height="16" rx="2" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <rect x="194" y="56" width="12" height="10" rx="1" fill="none" stroke="#ffffff" stroke-width="1.5"/>
-        <polygon points="240,72 290,34 340,72" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
-        <rect x="310" y="52" width="10" height="16" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <line x1="55" y1="72" x2="345" y2="72" stroke="#ffffff" stroke-width="2.5"/>
-        <rect x="55" y="79" width="290" height="5" fill="#c8102e"/>
-        <text x="55" y="145" font-family="Arial Black,Impact,sans-serif" font-size="62" font-weight="900" fill="#ffffff" letter-spacing="-1">NAILED</text>
-        <text x="335" y="145" font-family="Arial Black,Impact,sans-serif" font-size="62" font-weight="900" fill="#c8102e" letter-spacing="-1"> IT</text>
-        <line x1="55" y1="155" x2="490" y2="155" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-        <text x="57" y="178" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="rgba(255,255,255,0.80)" letter-spacing="5">ROOFING &amp; EXTERIORS</text>
-      </svg>
+      <img src="logo.jpg" alt="Nailed It Roofing & Exteriors" style="height:54px;width:auto;display:block;">
     </a>
 
     <div class="nav-links">
@@ -1216,12 +1241,25 @@ function showPage(pageId) {
 
     </div>
 
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-right">
       <a href="tel:4799572190" class="nav-phone">📞 (479) 957-2190</a>
       <a class="nav-cta" onclick="showPage('contact')">Free Inspection</a>
     </div>
   </div>
 </nav>
+<div id="mobile-menu" class="mobile-menu">
+  <button onclick="mobileNav('home')">Home</button>
+  <button onclick="mobileNav('services')">Services</button>
+  <button onclick="mobileNav('insurance')">Insurance Claims</button>
+  <button onclick="mobileNav('areas')">Service Areas</button>
+  <button onclick="mobileNav('about')">About Us</button>
+  <button onclick="mobileNav('referrals')">Referral Program</button>
+  <button onclick="mobileNav('contact')">Contact</button>
+  <a href="tel:4799572190" style="color:#c8102e;">&#x260E; (479) 957-2190</a>
+</div>
 
 
 <!-- ══════════════════════════════════════════════
@@ -2176,33 +2214,7 @@ function showPage(pageId) {
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="f-logo"><svg height="48" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:auto;">
-        <defs>
-          <linearGradient id="nS2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#6a7480"/><stop offset="30%" style="stop-color:#d0d8e0"/><stop offset="60%" style="stop-color:#e8edf2"/><stop offset="100%" style="stop-color:#8a9aaa"/></linearGradient>
-          <linearGradient id="nH2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#e8edf2"/><stop offset="40%" style="stop-color:#c0cad4"/><stop offset="100%" style="stop-color:#7a8a9a"/></linearGradient>
-        </defs>
-        <rect width="680" height="200" fill="#1a2540"/>
-        <g transform="translate(85,53) rotate(-38)">
-          <ellipse cx="0" cy="-32" rx="10" ry="4.5" fill="url(#nH2)" stroke="#4a5868" stroke-width="0.8"/>
-          <ellipse cx="0" cy="-33" rx="8" ry="3" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.7"/>
-          <polygon points="-3.5,-29 3.5,-29 2.5,4 -2.5,4" fill="url(#nS2)" stroke="#4a5868" stroke-width="0.5"/>
-          <line x1="1" y1="-28" x2="0.8" y2="3" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-          <polygon points="-2.5,4 2.5,4 0,12" fill="#9aaabb" stroke="#4a5868" stroke-width="0.5"/>
-        </g>
-        <polygon points="60,72 110,34 160,72" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
-        <rect x="78" y="52" width="10" height="16" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <polygon points="140,72 200,20 260,72" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round"/>
-        <rect x="190" y="48" width="20" height="16" rx="2" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <rect x="194" y="56" width="12" height="10" rx="1" fill="none" stroke="#ffffff" stroke-width="1.5"/>
-        <polygon points="240,72 290,34 340,72" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
-        <rect x="310" y="52" width="10" height="16" fill="none" stroke="#ffffff" stroke-width="2"/>
-        <line x1="55" y1="72" x2="345" y2="72" stroke="#ffffff" stroke-width="2.5"/>
-        <rect x="55" y="79" width="290" height="5" fill="#c8102e"/>
-        <text x="55" y="145" font-family="Arial Black,Impact,sans-serif" font-size="62" font-weight="900" fill="#ffffff" letter-spacing="-1">NAILED</text>
-        <text x="335" y="145" font-family="Arial Black,Impact,sans-serif" font-size="62" font-weight="900" fill="#c8102e" letter-spacing="-1"> IT</text>
-        <line x1="55" y1="155" x2="490" y2="155" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-        <text x="57" y="178" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="rgba(255,255,255,0.80)" letter-spacing="5">ROOFING &amp; EXTERIORS</text>
-      </svg></div>
+      <div class="f-logo"><img src="logo.jpg" alt="Nailed It Roofing & Exteriors" style="height:60px;width:auto;display:block;"></div>
       <p class="f-tagline">Your Roof. Done Right. Guaranteed. Proudly serving NW Arkansas since 2026. Licensed, insured, and locally owned.</p>
       <p style="font-size:.75rem;color:rgba(255,255,255,.25)">Arkansas Licensed, Bonded & Insured</p>
     </div>
@@ -2245,6 +2257,23 @@ function showPage(pageId) {
 
 <script>
 showPage('home');
+
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.page) {
+    showPage(e.state.page, false);
+  } else {
+    showPage('home', false);
+  }
+});
+
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+}
+function mobileNav(page) {
+  showPage(page);
+  document.getElementById('mobile-menu').classList.remove('open');
+}
 
 function submitContactForm() {
   var fname = document.getElementById('cf-fname').value.trim();
