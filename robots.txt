@@ -1,0 +1,21 @@
+# robots.txt — Nailed It Roofing & Exteriors
+# https://www.naileditnwa.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.naileditnwa.com/sitemap.xml
+
+# Block AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
