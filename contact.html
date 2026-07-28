@@ -629,7 +629,7 @@ var pageLoadT=Date.now();
 
 function showPage(id){
   if(id==='dashboard'&&!gateOk())return;
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  if(!document.getElementById('page-'+id))return;document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   var el=document.getElementById('page-'+id);
   if(el){el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
   document.querySelectorAll('.nav-links.open').forEach(function(n){n.classList.remove('open');});
@@ -756,7 +756,6 @@ function ok(){var el=document.querySelector('.hero');if(el)el.classList.add('has
 var a=new Image();a.onload=ok;a.onerror=function(){var b=new Image();b.onload=ok;b.onerror=function(){var c=new Image();c.onload=ok;c.src=RAW+'/hero.jpg';};b.src=SITE+'/hero.jpg';};a.src='hero.jpg';
 document.addEventListener('error',function(e){var t=e.target;if(!t||t.tagName!=='IMG')return;if(t.closest&&t.closest('.logo'))return;var n=(t.getAttribute('src')||'').split('/').pop();if(!n)return;var s=t.dataset.rf|0;if(s===0){t.dataset.rf=1;t.src=SITE+'/'+n;}else if(s===1){t.dataset.rf=2;t.src=RAW+'/'+n;}},true);
 })();
-showPage('home');
 </script>
 <script>
 (function(){var _sp=window.showPage;var MAP={"home": "/", "services": "/services/", "svc-storm": "/storm-damage-repair-nwa/", "svc-replace": "/roof-replacement-nwa/", "svc-repair": "/roof-repair-nwa/", "svc-inspect": "/free-roof-inspection-nwa/", "svc-metal": "/metal-roofing-nwa/", "svc-gutter": "/gutter-installation-nwa/", "svc-skylight": "/skylight-installation-nwa/", "svc-exterior": "/exterior-services-nwa/", "svc-commercial": "/commercial-roofing-nwa/", "insurance": "/insurance-claims/", "areas": "/service-areas/", "about": "/about/", "referrals": "/referral-partners/", "contact": "/contact/", "dashboard": "/dashboard/"};window.showPage=function(id){if(document.getElementById('page-'+id)){return _sp?_sp(id):null;}if(MAP[id]){window.location.href=MAP[id];}};})();
